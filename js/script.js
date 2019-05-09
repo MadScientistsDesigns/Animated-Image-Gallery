@@ -1,66 +1,67 @@
-$(document).ready(function(){
-	var items = $('#gallery li'),
-		itemsByTags = {};
-		
-	//Loop through tags
-	items.each(function(i){
+$(document).ready(function () {
+	var items = $("#gallery li"),
+	itemsbyTags = {};
+
+	// loop through tags
+	items.each(function(i) {
 		var elem = $(this),
-		tags = elem.data('tags').split(',');
-		
-		//Add data attribute for quicksand
-		elem.attr('data-id',i);
-		
-		$.each(tags,function(key,value){
-			//Remove whitespace
+		tags = elem.data("tags").split(",");
+
+		// add data attribute for quicksand
+		elem.attr("data-id",i);
+
+		$.each(tags, function(key,value){
+			// remove whitespace
 			value = $.trim(value);
-			
-			if(!(value in itemsByTags)){
-				//Add empty value
-				itemsByTags[value] = [];
+
+			if(!(value in itemsbyTags)){
+				// add empty value
+				itemsbyTags[value] = [];
 			}
-			
-			//Add image to array
-			itemsByTags[value].push(elem);
+
+			// add image to array
+			itemsbyTags[value].push(elem);
 		});
 	});
-	
-	//Create "All Items" option
-	createList('All Items',items);
-	
-	$.each(itemsByTags, function(k, v){
-		createList(k, v);
+
+	// create "all items" option
+	createList("All Items",items);
+
+	$.each(itemsbyTags, function(k,v){
+		createList(k,v);
 	});
-	
-	//Click Handler
-	$('#navbar a').live('click', function(e){
+
+	// click handler
+	$("#navbar a").live("click", function(e){
 		var link = $(this);
-		
-		//Add active class
-		link.addClass('active').siblings().removeClass('active');
-		
-		$('#gallery').quicksand(link.data('list').find('li'));
+
+		// add active class
+		link.addClass("active").siblings().removeClass("active");
+
+		$("#gallery").quicksand(link.data("list").find("li"));
 		e.preventDefault();
 	});
-	
-	$('#navbar a:first').click();
-	
-	//Create the lists
+
+
+	$("#navbar a:first").click();
+
+	// create the lists
 	function createList(text,items){
-		//Create empty ul
-		var ul = $('<ul>',{'class':'hidden'});
-		
+		// create empty unordered list
+		var ul = $("<ul>",{"class":"hidden"});
+
 		$.each(items, function(){
-			$(this).clone().appendTo(ul)
+			$(this).clone().appendTo(ul);
 		});
-		
-		//Add gallery div
-		ul.appendTo('#gallery');
-		
-		//Create menu item
-		var a = $('<a>',{
+
+		// add gallery div
+		ul.appendTo("#gallery");
+
+		// create menu item
+		var a = $("<a>",{
 			html:text,
-			href:'#',
+			href: "#",
 			data:{list:ul}
-		}).appendTo('#navbar');
+		}).appendTo("#navbar");		
 	}
 });

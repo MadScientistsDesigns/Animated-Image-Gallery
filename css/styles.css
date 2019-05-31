@@ -74,6 +74,11 @@ a {
     display: none;
 }
 
+#main li a {
+    max-height: 100px;
+    max-width: 100px;
+}
+
 footer{
     text-align: center;
     color: #333;
